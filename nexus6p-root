@@ -1,0 +1,8 @@
+下载手机对应的recovery img和SuperSu：
+    TWRP：https://twrp.me/Devices/
+    SR3-SuperSU-v2.82-SR3-20170813133244.zip
+
+adb push SR3-SuperSU-v2.82-SR3-20170813133244.zip /sdcard/
+adb reboot bootloader
+fastboot flash recovery twrp-3.2.3-0-angler.img
+
