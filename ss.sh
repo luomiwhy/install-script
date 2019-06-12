@@ -1,4 +1,4 @@
-yum install -y vim wget net-tools yum-utils
+yum install -y vim wget net-tools yum-utils gcc g++ 
 
 wget --no-check-certificate -O shadowsocks-libev.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-libev.sh
 
