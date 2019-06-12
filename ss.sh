@@ -6,6 +6,9 @@ chmod +x shadowsocks-libev.sh
 
 ./shadowsocks-libev.sh
 
+sed -i 's/\#baseurl/baseurl/g' /etc/yum.repos.d/epel.repo
+sed -i 's/metalink/\#metalink/g' /etc/yum.repos.d/epel.repo
+
 firewall-cmd --zone=public --list-ports
 
 wget -N --no-check-certificate "https://github.com/cx9208/bbrplus/raw/master/ok_bbrplus_centos.sh" 
