@@ -1,3 +1,6 @@
+ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+timedatectl set-timezone Asia/Shanghai
+
 yum install -y vim wget net-tools yum-utils gcc g++ 
 
 wget --no-check-certificate -O shadowsocks-libev.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-libev.sh
