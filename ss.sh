@@ -25,4 +25,4 @@ sysctl net.core.default_qdisc
 lsmod | grep bbr
 
 
-# tcp加速  bbrplus、锐速
+# tcp加速  bbrplus、锐速、dog-tunnel
