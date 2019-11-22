@@ -14,9 +14,9 @@ sed -i 's/metalink/\#metalink/g' /etc/yum.repos.d/epel.repo
 
 firewall-cmd --zone=public --list-ports
 
-wget -N --no-check-certificate "https://github.com/cx9208/bbrplus/raw/master/ok_bbrplus_centos.sh" 
-chmod +x ok_bbrplus_centos.sh
-./ok_bbrplus_centos.sh
+wget -N --no-check-certificate "https://raw.githubusercontent.com/chiakge/Linux-NetSpeed/master/tcp.sh"
+chmod +x tcp.sh
+./tcp.sh
 
 uname -r
 sysctl net.ipv4.tcp_available_congestion_control
