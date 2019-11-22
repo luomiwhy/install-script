@@ -18,6 +18,7 @@ net.core.somaxconn = 4096
 net.ipv4.tcp_syncookies = 1
 # reuse timewait sockets when safe
 net.ipv4.tcp_tw_reuse = 1
+net.ipv4.tcp_timestamps=1
 # turn off fast timewait sockets recycling
 # net.ipv4.tcp_tw_recycle = 0
 # short FIN timeout
@@ -45,3 +46,20 @@ EOF
 
 
 sysctl -p
+
+
+
+cat>>/etc/security/limits.conf<<EOF
+*               soft    nofile           512000
+*               hard    nofile          1024000
+EOF
+
+
+cat>>/etc/pam.d/common-session<<EOF
+session required pam_limits.so
+EOF
+
+
+cat>>/etc/profile<<EOF
+ulimit -SHn 1024000
+EOF
