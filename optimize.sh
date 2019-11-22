@@ -1,4 +1,4 @@
-cat>/etc/sysctl.conf<<EOF
+cat>>/etc/sysctl.conf<<EOF
 # max open files
 fs.file-max = 1024000
 # max read buffer
@@ -42,3 +42,6 @@ net.ipv4.tcp_mtu_probing = 1
 # forward ipv4
 net.ipv4.ip_forward = 1
 EOF
+
+
+sysctl -p
