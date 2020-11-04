@@ -21,6 +21,7 @@ lsmod | grep bbr
 # tcp加速 kcptun、bbrplus、锐速、dog-tunnel、rescue被抢vps
 # 转发 socat.sh
 
+# https://github.com/Jrohy/trojan/
 source <(curl -sL https://git.io/trojan-install)
 # nyy.mgdianzi.xyz
 
