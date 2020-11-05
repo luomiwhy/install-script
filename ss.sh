@@ -6,9 +6,10 @@ chmod +x tcp.sh
 ./tcp.sh
 
 
-wget --no-check-certificate -O shadowsocks-libev.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-libev-debian.sh
-chmod +x shadowsocks-libev.sh
-./shadowsocks-libev.sh
+#wget --no-check-certificate -O shadowsocks-libev.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-libev-debian.sh
+wget --no-check-certificate -O shadowsocks.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-all.sh
+chmod +x shadowsocks.sh
+./shadowsocks.sh
 
 
 uname -r
