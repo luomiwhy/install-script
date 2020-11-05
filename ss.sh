@@ -24,5 +24,5 @@ lsmod | grep bbr
 
 # https://github.com/Jrohy/trojan/
 source <(curl -sL https://git.io/trojan-install)
-# nyy.mgdianzi.xyz
+# byl.mgdianzi.xyz
 
