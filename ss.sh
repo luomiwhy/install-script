@@ -24,6 +24,10 @@ lsmod | grep bbr
 # tcp加速 kcptun、bbrplus、锐速、dog-tunnel、rescue被抢vps
 # 转发 socat.sh
 
+apt-get install mysql-server
+mysql -u root -p
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '2wsx3edc' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
 # https://github.com/Jrohy/trojan/
 source <(curl -sL https://git.io/trojan-install)
 # byl.mgdianzi.xyz
