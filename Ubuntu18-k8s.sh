@@ -1,6 +1,17 @@
 #!/bin/bash 
 
-timedatectl set-timezone Asia/Shanghai
+HOST_IP=$(ifconfig ens33 | grep "netmask" | awk '{ print $2}' )
+echo $HOST_IP
+
+sudo timedatectl set-timezone Asia/Shanghai
+
+# 主机名设置
+sudo hostnamectl set-hostname k8s-master1
+# 设置机器 ip
+
+# host 配置： k8s-master1
+echo "$HOST_IP k8s-master1" | sudo tee -a /etc/hosts
+cat /etc/hosts
 
 # 更换 源
 cat <<EOF | sudo tee /etc/apt/sources.list
@@ -16,13 +27,6 @@ deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted univer
 deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
 EOF
 sudo apt-get update
-
-# 主机名设置
-hostnamectl set-hostname k8s-master1
-# 设置机器 ip
-
-# host 配置： 192.168.121.129 k8s-master1
-sudo vim /etc/hosts
 
 # 同步时间
 
@@ -102,7 +106,7 @@ for imageName in ${images[@]} ; do
 done
 
 # 初始化Master
-sudo kubeadm init --kubernetes-version=v1.20.1 --apiserver-advertise-address=192.168.121.129 --pod-network-cidr=10.244.0.0/16
+sudo kubeadm init --kubernetes-version=v1.20.1 --apiserver-advertise-address=$HOST_IP --pod-network-cidr=10.244.0.0/16
 
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
@@ -113,5 +117,5 @@ kubectl taint nodes --all node-role.kubernetes.io/master-
 # 部署网络插件
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
-# Dashboard
+# Dashboard： 修改为免密登录
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.1.0/aio/deploy/recommended.yaml
