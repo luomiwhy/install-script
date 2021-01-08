@@ -59,7 +59,7 @@ sudo apt-get -y update
 sudo apt-get install -y containerd.io=1.2.13-2 docker-ce=5:19.03.11~3-0~ubuntu-$(lsb_release -cs) docker-ce-cli=5:19.03.11~3-0~ubuntu-$(lsb_release -cs)
 cat <<EOF | sudo tee /etc/docker/daemon.json
 {
-  "registry-mirrors": ["https://registry.cn-hangzhou.aliyuncs.com"],
+  "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn", "https://mirror.ccs.tencentyun.com"],
   "exec-opts": ["native.cgroupdriver=systemd"],
   "log-driver": "json-file",
   "log-opts": {
