@@ -1,5 +1,7 @@
 #!/bin/bash 
 
+timedatectl set-timezone Asia/Shanghai
+
 # 更换 源
 cat <<EOF | sudo tee /etc/apt/sources.list
 deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
