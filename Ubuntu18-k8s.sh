@@ -28,6 +28,8 @@ deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted unive
 EOF
 sudo apt-get update
 
+sudo apt install lrzsz -y
+
 # 同步时间
 
 # 关闭 swap
@@ -118,4 +120,8 @@ kubectl taint nodes --all node-role.kubernetes.io/master-
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
 # Dashboard： 修改为免密登录
+# auto-generate-certificates 下同级增加 "- --enable-skip-login"
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.1.0/aio/deploy/recommended.yaml
+
+kubectl proxy --address='0.0.0.0' --disable-filter=true &
+# http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
