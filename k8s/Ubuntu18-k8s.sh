@@ -121,7 +121,10 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documen
 
 # Dashboard： 修改为免密登录
 # auto-generate-certificates 下同级增加 "- --enable-skip-login"
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.1.0/aio/deploy/recommended.yaml
+# kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.1.0/aio/deploy/recommended.yaml
+kubectl apply -f dashboard-minikube.yml
 
 kubectl proxy --address='0.0.0.0' --disable-filter=true &
 # http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
+# http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/
+
