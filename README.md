@@ -3,6 +3,11 @@
 sed -i "" "s/w4#odQd2ttoDxHtR/****/g" `grep w4#odQd2ttoDxHtR -rl *`
 ```
 
+### 获取git模块修改
+```bash
+git diff origin/xxx  origin/master --name-only | cut -d "/" -f 1 | sort | uniq
+```
+
 ### iptables ip 请求重定向
 ```bash
 sudo iptables -t nat -A OUTPUT -d 10.244/16 -j DNAT --to-destination 192.168.121.128
