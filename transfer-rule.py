@@ -23,17 +23,23 @@ def generateRules(url, diversion) :
             rule.append("DOMAIN-SUFFIX,"+d[1:]+","+diversion)
         else:
             rule.append("DOMAIN,"+d+","+diversion)
+    return rule
 
 
 ruleAll = []
 for m in source:
     ruleAll.extend(generateRules(m["url"], m["diversion"]))
 
-with open("Spectre.rules", "w") as f:
-    f.writelines("[Rule]")
+with open("spectre.rules", "w") as f:
+    f.writelines("[Rule]",)
+    f.write("\n")
     f.writelines("DOMAIN-SUFFIX,cn,DIRECT")
+    f.write("\n")
     for r in ruleAll:
         f.writelines(r)
+        f.write("\n")
     f.writelines("GEOIP,CN,DIRECT")
+    f.write("\n")
     f.writelines("FINAL,PROXY")
+    f.write("\n")
 
