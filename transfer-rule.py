@@ -47,25 +47,32 @@ source = [
     },
     {
         "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/telegramcidr.txt",
-        "diversion": "PROXY"
+        "diversion": "PROXY",
+        "ext": ",no-resolve"
     }
 ]
 
 
-def generateRules(url, diversion) :
+def generateRules(map) :
+    url=map["url"]
+    diversion=map["diversion"]
+    ext=map.get("ext")
     dic = urlopen(url).read()
     dic = dic.decode()
     # print(type(dic), dir(dic))
     # print(dic)
     rule = []
     for d in dic.splitlines():
-        rule.append(d+","+diversion)
+        if ext is None:
+            rule.append(d+","+diversion)
+        else:
+            rule.append(d+","+diversion+ext)
     return rule
 
 
 ruleAll = []
 for m in source:
-    ruleAll.extend(generateRules(m["url"], m["diversion"]))
+    ruleAll.extend(generateRules(m))
 
 with open("spectre.rules", "w") as f:
     f.writelines("[Rule]",)
