@@ -6,8 +6,48 @@ from urllib.request import urlopen
 
 source = [
     {
-        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/direct.txt",
+        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/reject.txt",
+        "diversion": "REJECT"
+    },
+    {
+        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/direct.txt",
         "diversion": "DIRECT"
+    },
+    {
+        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/apple.txt",
+        "diversion": "DIRECT"
+    },
+    {
+        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/icloud.txt",
+        "diversion": "DIRECT"
+    },
+    {
+        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/google.txt",
+        "diversion": "DIRECT"
+    },
+    {
+        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/cncidr.txt",
+        "diversion": "DIRECT"
+    },
+    {
+        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/proxy.txt",
+        "diversion": "PROXY"
+    },
+    {
+        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/gfw.txt",
+        "diversion": "PROXY"
+    },
+    {
+        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/greatfire.txt",
+        "diversion": "PROXY"
+    },
+    {
+        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/tld-not-cn.txt",
+        "diversion": "PROXY"
+    },
+    {
+        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/telegramcidr.txt",
+        "diversion": "PROXY"
     }
 ]
 
@@ -19,10 +59,7 @@ def generateRules(url, diversion) :
     # print(dic)
     rule = []
     for d in dic.splitlines():
-        if d.startswith("."):
-            rule.append("DOMAIN-SUFFIX,"+d[1:]+","+diversion)
-        else:
-            rule.append("DOMAIN,"+d+","+diversion)
+        rule.append(d+","+diversion)
     return rule
 
 
@@ -42,4 +79,3 @@ with open("spectre.rules", "w") as f:
     f.write("\n")
     f.writelines("FINAL,PROXY")
     f.write("\n")
-
