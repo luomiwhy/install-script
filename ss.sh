@@ -21,7 +21,7 @@ lsmod | grep bbr
 
 apt-get install mysql-server
 mysql -u root -p
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '2wsx3edc' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'll'@'localhost' IDENTIFIED BY '2wsx3edc' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 # https://github.com/Jrohy/trojan/
 source <(curl -sL https://git.io/trojan-install)
