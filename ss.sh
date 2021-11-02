@@ -3,15 +3,11 @@
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 #timedatectl set-timezone Asia/Shanghai
 
+source <(curl -sL https://git.io/trojan-install)
+
 https://github.com/ylx2016/Linux-NetSpeed
 #wget -N --no-check-certificate "https://github.000060000.xyz/tcp.sh" && chmod +x tcp.sh && ./tcp.sh
 wget -N "https://github.000060000.xyz/tcpx.sh" && chmod +x tcpx.sh && ./tcpx.sh
-
-
-#wget --no-check-certificate -O shadowsocks-libev.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-libev-debian.sh
-wget --no-check-certificate -O shadowsocks.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-all.sh
-chmod +x shadowsocks.sh
-./shadowsocks.sh
 
 
 uname -a
