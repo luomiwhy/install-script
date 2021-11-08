@@ -2,7 +2,7 @@
 
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 #timedatectl set-timezone Asia/Shanghai
-apt install -y vim
+apt install -y vim mysql-server
 vim /etc/ssh/sshd_config
 
 
@@ -21,7 +21,7 @@ lsmod | grep bbr
 # tcp加速 kcptun、bbrplus、锐速、dog-tunnel、rescue被抢vps
 # 转发 socat.sh
 
-apt-get install -y mysql-server
+
 mysql -u root -p
 GRANT ALL PRIVILEGES ON *.* TO 'll'@'localhost' IDENTIFIED BY '2wsx3edc' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
