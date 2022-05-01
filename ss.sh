@@ -29,3 +29,4 @@ FLUSH PRIVILEGES;
 source <(curl -sL https://git.io/trojan-install)
 # byl.mgdianzi.xyz
 
+# https://tunnelbroker.net/   ipv6隧道
