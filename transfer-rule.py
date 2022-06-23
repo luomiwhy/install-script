@@ -1,6 +1,8 @@
 #! /usr/bin env python3
 # -- coding:utf-8 --
 # pip3 install pyyaml
+# https://github.com/pexcn/daily/tree/gh-pages/shadowrocket
+# 
 
 from urllib.request import urlopen
 
