@@ -2,7 +2,7 @@
 # -- coding:utf-8 --
 # pip3 install pyyaml
 # https://github.com/pexcn/daily/tree/gh-pages/shadowrocket
-# 
+# https://raw.githubusercontent.com/luomiwhy/install-script/master/spectre2.rules
 
 from urllib.request import urlopen
 
