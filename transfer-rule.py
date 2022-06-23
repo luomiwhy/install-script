@@ -6,40 +6,8 @@ from urllib.request import urlopen
 
 source = [
     {
-        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/reject.txt",
-        "diversion": "REJECT"
-    },
-    {
         "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/direct.txt",
         "diversion": "DIRECT"
-    },
-    {
-        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/apple.txt",
-        "diversion": "DIRECT"
-    },
-    {
-        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/icloud.txt",
-        "diversion": "DIRECT"
-    },
-    {
-        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/google.txt",
-        "diversion": "DIRECT"
-    },
-    {
-        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/cncidr.txt",
-        "diversion": "DIRECT"
-    },
-    {
-        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/proxy.txt",
-        "diversion": "PROXY"
-    },
-    {
-        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/gfw.txt",
-        "diversion": "PROXY"
-    },
-    {
-        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/greatfire.txt",
-        "diversion": "PROXY"
     },
     {
         "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/tld-not-cn.txt",
