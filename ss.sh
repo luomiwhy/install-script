@@ -30,3 +30,5 @@ source <(curl -sL https://git.io/trojan-install)
 # byl.mgdianzi.xyz
 
 # https://tunnelbroker.net/   ipv6隧道   https://agou-ops.cn/post/%E8%A7%A3%E5%86%B3vps%E9%A2%91%E7%B9%81google%E4%BA%BA%E6%9C%BA%E9%AA%8C%E8%AF%81ip%E8%A2%AB%E5%A2%99/
+
+# vps kms
