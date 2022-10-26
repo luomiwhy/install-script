@@ -38,86 +38,87 @@
 
 
 
-    // Youtube for peoples with extremely slow connexion. Like me.
-    // All hacks like media.mediasource.enabled, media.cache_readhead_limit, etc. don't work ?
-    // This is a manual JS way to force it.
-    /*
-    What it does :
-    It pauses your youtube video. When video stop buffering it manually move the seeker to force the download.
-    When the download is finished, it place the cursor back to it's original position. You are then ready to play a fully buffered video.
-    */
 
-    /*
-    How to use :
-    Paste this script in the console of your browser (F12 > Console). Tested on Firefox Linux.
-    */
+    var pollingWorker = createWorker(function (e) {
+        // Youtube for peoples with extremely slow connexion. Like me.
+        // All hacks like media.mediasource.enabled, media.cache_readhead_limit, etc. don't work ?
+        // This is a manual JS way to force it.
+        /*
+        What it does :
+        It pauses your youtube video. When video stop buffering it manually move the seeker to force the download.
+        When the download is finished, it place the cursor back to it's original position. You are then ready to play a fully buffered video.
+        */
 
-    // Note : Maximize your "browser.cache.disk.capacity" (type "about:config" in Firefox) if you are loading long videos
+        /*
+        How to use :
+        Paste this script in the console of your browser (F12 > Console). Tested on Firefox Linux.
+        */
 
-    // Youtube for peoples with extremely slow connexion. Like me.
-    // All hacks like media.mediasource.enabled, media.cache_readhead_limit, etc. don't work ?
-    // This is a manual JS way to force it.
+        // Note : Maximize your "browser.cache.disk.capacity" (type "about:config" in Firefox) if you are loading long videos
 
-    /*
-    What it does :
-    It pauses your youtube video. When video stop buffering it manually move the seeker to force the download.
-    When the download is finished, it place the cursor back to it's original position. You are then ready to play a fully buffered video.
-    */
+        // Youtube for peoples with extremely slow connexion. Like me.
+        // All hacks like media.mediasource.enabled, media.cache_readhead_limit, etc. don't work ?
+        // This is a manual JS way to force it.
 
-    /*
-    How to use :
-    Paste this script in the console of your browser (F12 > Console). Tested on Firefox Linux.
-    */
+        /*
+        What it does :
+        It pauses your youtube video. When video stop buffering it manually move the seeker to force the download.
+        When the download is finished, it place the cursor back to it's original position. You are then ready to play a fully buffered video.
+        */
 
-    // Note : Maximize your "browser.cache.disk.capacity" (type "about:config" in Firefox) if you are loading long videos
+        /*
+        How to use :
+        Paste this script in the console of your browser (F12 > Console). Tested on Firefox Linux.
+        */
 
-    const success = [
-        'background: rgba(0,204,0,0.2)',
-        'color: yellow',
-        'display: block',
-        'text-align: left'
-    ].join(';');
+        // Note : Maximize your "browser.cache.disk.capacity" (type "about:config" in Firefox) if you are loading long videos
 
-    const failure = [
-        'background: rgba(255,0,0,0.2)',
-        'color: yellow',
-        'display: block',
-        'text-align: left'
-    ].join(';');
+        const success = [
+            'background: rgba(0,204,0,0.2)',
+            'color: yellow',
+            'display: block',
+            'text-align: left'
+        ].join(';');
 
-    const warning = [
-        'background: rgba(55, 102, 0,0.2)',
-        'color: orange',
-        'display: block',
-        'text-align: left'
-    ].join(';');
+        const failure = [
+            'background: rgba(255,0,0,0.2)',
+            'color: yellow',
+            'display: block',
+            'text-align: left'
+        ].join(';');
 
-    console.info('%c Youtubeforce ftw!', success);
-    var current_download = 0;
-    var previous_download = 0;
-    var loop_since_download = 0;
-    var loop = 1;
-    var player = document.getElementById('movie_player');
-    var duration = player.getDuration();
-    var first_chunk_loaded = Math.round((player.getVideoBytesLoaded() / player.getVideoBytesTotal()) * 100);
-    var last_chunk_loaded = 0;
-    var first_buffer_time = false;
-    var waiter = 0;
-    var total_restart_buffer = 0;
-    //var v_title =document.querySelector("#container > h1").children[0].innerHTML;
-    var v_title = document.querySelector("title").innerHTML;
-    function update_current_chunk_loaded(current_chunk_loaded) {
-        //get id loaded_progress
-        // select #container > h1 as h1
-        var h1 = document.querySelector("#container > h1");
+        const warning = [
+            'background: rgba(55, 102, 0,0.2)',
+            'color: orange',
+            'display: block',
+            'text-align: left'
+        ].join(';');
 
-        var loaded_progress = document.getElementById('loaded_progress');
-        //add loaded_progress after h1
-        h1.children[0].innerHTML = v_title + " - " + current_chunk_loaded + "%";
+        console.info('%c Youtubeforce ftw!', success);
+        var current_download = 0;
+        var previous_download = 0;
+        var loop_since_download = 0;
+        var loop = 1;
+        var player = document.getElementById('movie_player');
+        var duration = player.getDuration();
+        var first_chunk_loaded = Math.round((player.getVideoBytesLoaded() / player.getVideoBytesTotal()) * 100);
+        var last_chunk_loaded = 0;
+        var first_buffer_time = false;
+        var waiter = 0;
+        var total_restart_buffer = 0;
+        //var v_title =document.querySelector("#container > h1").children[0].innerHTML;
+        var v_title = document.querySelector("title").innerHTML;
+        function update_current_chunk_loaded(current_chunk_loaded) {
+            //get id loaded_progress
+            // select #container > h1 as h1
+            var h1 = document.querySelector("#container > h1");
 
-    }
-    if (player) {
-        var pollingWorker = createWorker(function (e) {
+            var loaded_progress = document.getElementById('loaded_progress');
+            //add loaded_progress after h1
+            h1.children[0].innerHTML = v_title + " - " + current_chunk_loaded + "%";
+
+        }
+        if (player) {
             var inter = setInterval(function () {
                 var d = new Date();
                 current_download = player.getVideoBytesLoaded();
@@ -174,8 +175,8 @@
                     //console.log("We are waiting...");
                 }
             }, 1000);
-        });
-    }
+        }
+    });
     document.addEventListener('DOMContentLoaded', function () {
         //get container > h1 innerHTML
         var h1 = document.querySelector("#container > h1");
