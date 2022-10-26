@@ -74,7 +74,7 @@
     var loop = 1;
     var player = document.getElementById('movie_player');
     var duration = player.getDuration();
-    var first_chunk_loaded = Math.round((player.getVideoBytesLoaded() / player.getVideoBytesTotal()) * 100);
+    var first_chunk_loaded = Math.round(player.getVideoLoadedFraction()  * 100);
     var last_chunk_loaded = 0;
     var first_buffer_time = false;
     var waiter = 0;
@@ -94,12 +94,12 @@
     function loading_video() {
         if (player) {
             var d = new Date();
-            current_download = player.getVideoBytesLoaded();
+            current_download = player.getVideoLoadedFraction();
             if (waiter > 0) waiter--;
             if (waiter <= 0) {
-                if (player.getVideoBytesLoaded() != "NaN") {
+                if (player.getVideoLoadedFraction() != "NaN") {
                     // Try to buffer if buffer is not at the end
-                    if (player.getVideoBytesLoaded() < (player.getVideoBytesTotal() - 0.02)) {
+                    if (player.getVideoLoadedFraction() < 0.98) {
                         // Video is not loading anymore...
                         if (current_download == previous_download) {
                             // Video buffer is stop. wait a bit.
@@ -114,7 +114,7 @@
                                 }
                                 console.log("%c Restart buffer (10 loops since last download), and pause for 10 loops... (already restarted " + total_restart_buffer + " times " + d, warning);
                                 // sectotal * byteLoaded / byteTotal = sec loaded
-                                var current_time_loaded = player.getDuration() * (player.getVideoBytesLoaded() / player.getVideoBytesTotal());
+                                var current_time_loaded = player.getDuration() * player.getVideoLoadedFraction();
                                 player.seekTo(current_time_loaded - 2); // - 2sec
                                 player.pauseVideo();
                                 waiter = 10;
@@ -122,16 +122,16 @@
                             }
                             // Video is still loading...
                         } else {
-                            previous_download = player.getVideoBytesLoaded();
+                            previous_download = player.getVideoLoadedFraction();
                             loop_since_download = 0;
-                            var current_chunk_loaded = Math.round((player.getVideoBytesLoaded() / player.getVideoBytesTotal()) * 100);
+                            var current_chunk_loaded = Math.round(player.getVideoLoadedFraction()  * 100);
                             console.info("%c Video is buffering properly (" + current_chunk_loaded + "%). " + loop + " loops, and " + loop_since_download + " iteration since last chunk, wait 10 loops " + d, success);
                             waiter = 10;
                             update_current_chunk_loaded(current_chunk_loaded);
                         }
                         loop++;
                     } else {
-                        last_chunk_loaded = Math.round((player.getVideoBytesLoaded() / player.getVideoBytesTotal()) * 100);
+                        last_chunk_loaded = Math.round(player.getVideoLoadedFraction()  * 100);
                         console.log("%c Everything is loaded or the tab is inactive... Wait 50sec. Total number of buffer restart : " + total_restart_buffer + " and Total buffered : " + last_chunk_loaded + "%. Buffered on launch : " + first_chunk_loaded, success);
                         waiter = 50;
                         // restarting to first buffer and play
@@ -183,11 +183,31 @@
         loading_video()
     }
 
+    player.addEventListener('onStateChange', function (event) {
+        if (event.data == 0) {
+            // 0（已结束）
+        }
+        else if (event.data == 1) {
+            // 1（正在播放）
+        }
+        else if (event.data == 2) {
+            // 2（已暂停）
+        }
+        else if (event.data == 3) {
+            // 3（正在缓冲）
+        }
+        else if (event.data == 5) {
+            // 5（视频已插入）
+        }
+        else {
+            //         -1（未开始）
+        }
+    });
 
     document.addEventListener('DOMContentLoaded', function () {
         //get container > h1 innerHTML
         var h1 = document.querySelector("#container > h1");
         var v_title = h1.children[0].innerHTML;
     });
-    // Your code here...
 })();
+
