@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         youtube buffer enhence 缓冲增加
+// @name         youtube buffer enhence 缓冲增加 2
 // @namespace    http://tampermonkey.net/
 // @version      0.2
 // @description  youtube buffer enhence: fork from https://greasyfork.org/zh-CN/scripts/442685-youtube-buffer-enhence-%E7%BC%93%E5%86%B2%E5%A2%9E%E5%8A%A0
