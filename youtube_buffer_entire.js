@@ -111,7 +111,7 @@
         current_download = player.getVideoLoadedFraction();
         // Try to buffer if buffer is not at the end
         console.log("getVideoLoadedFraction: "+player.getVideoLoadedFraction());
-        if (player.getVideoLoadedFraction() < 0.98) {
+        if (player.getVideoLoadedFraction() != 1) {
             // Video is not loading anymore...
             if (current_download == previous_download) {
                 // Video buffer is stop. wait a bit.
