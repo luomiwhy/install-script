@@ -92,7 +92,7 @@
     }
 
     function loading_video() {
-        if (player) {
+        if (player && player.getPlayerState()==2) {
             var d = new Date();
             current_download = player.getVideoLoadedFraction();
             if (waiter > 0) waiter--;
