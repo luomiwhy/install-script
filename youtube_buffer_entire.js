@@ -74,7 +74,7 @@
     var loop = 1;
     var player = document.getElementById('movie_player');
     var duration = player.getDuration();
-    var first_chunk_loaded = Math.round(player.getVideoLoadedFraction()  * 100);
+    var first_chunk_loaded = Math.round(player.getVideoLoadedFraction() * 100);
     var last_chunk_loaded = 0;
     var first_buffer_time = false;
     var waiter = 0;
@@ -92,63 +92,67 @@
     }
 
     function loading_video() {
-        if (player && player.getPlayerState()==2) {
-            var d = new Date();
-            current_download = player.getVideoLoadedFraction();
-            if (waiter > 0) waiter--;
-            if (waiter <= 0) {
-                if (player.getVideoLoadedFraction() != "NaN") {
-                    // Try to buffer if buffer is not at the end
-                    if (player.getVideoLoadedFraction() < 0.98) {
-                        // Video is not loading anymore...
-                        if (current_download == previous_download) {
-                            // Video buffer is stop. wait a bit.
-                            loop_since_download++;
-                            if (loop_since_download > 10) {
-                                if (loop_since_download > 30) {
-                                    console.log("%c Slow connexion..., pause for 20 loops " + d, error);
-                                    waiter = 20;
-                                }
-                                if (!first_buffer_time) {
-                                    first_buffer_time = player.getCurrentTime();
-                                }
-                                console.log("%c Restart buffer (10 loops since last download), and pause for 10 loops... (already restarted " + total_restart_buffer + " times " + d, warning);
-                                // sectotal * byteLoaded / byteTotal = sec loaded
-                                var current_time_loaded = player.getDuration() * player.getVideoLoadedFraction();
-                                player.seekTo(current_time_loaded - 2); // - 2sec
-                                player.pauseVideo();
-                                waiter = 10;
-                                total_restart_buffer++;
-                            }
-                            // Video is still loading...
-                        } else {
-                            previous_download = player.getVideoLoadedFraction();
-                            loop_since_download = 0;
-                            var current_chunk_loaded = Math.round(player.getVideoLoadedFraction()  * 100);
-                            console.info("%c Video is buffering properly (" + current_chunk_loaded + "%). " + loop + " loops, and " + loop_since_download + " iteration since last chunk, wait 10 loops " + d, success);
-                            waiter = 10;
-                            update_current_chunk_loaded(current_chunk_loaded);
-                        }
-                        loop++;
-                    } else {
-                        last_chunk_loaded = Math.round(player.getVideoLoadedFraction()  * 100);
-                        console.log("%c Everything is loaded or the tab is inactive... Wait 50sec. Total number of buffer restart : " + total_restart_buffer + " and Total buffered : " + last_chunk_loaded + "%. Buffered on launch : " + first_chunk_loaded, success);
-                        waiter = 50;
-                        // restarting to first buffer and play
-                        if (first_buffer_time) {
-                            player.seekTo(first_buffer_time);
-                            first_buffer_time = false;
-                            // 主线程调用worker.postMessage()方法，向 Worker 发消息。
-                            pollingWorker.postMessage('done');
-                            pollingWorker.terminate();
-                        }
+        if (player && player.getPlayerState() == 2) {
+        } else {
+            return;
+        }
+        if (waiter > 0) {
+            waiter--;
+            console.log("We are waiting...");
+            return;
+        }
+        if (player.getVideoLoadedFraction() == "NaN") {
+            waiter = 3;
+            console.log("%c Error getting stream. Waiting..., wait "+waiter+" loops", error);
+            return;
+        }
+        
+        var d = new Date();
+        current_download = player.getVideoLoadedFraction();
+        // Try to buffer if buffer is not at the end
+        console.log("getVideoLoadedFraction: "+player.getVideoLoadedFraction());
+        if (player.getVideoLoadedFraction() < 0.98) {
+            // Video is not loading anymore...
+            if (current_download == previous_download) {
+                // Video buffer is stop. wait a bit.
+                loop_since_download++;
+                if (loop_since_download > 1) {
+                    if (loop_since_download > 10) {
+                        waiter = 3;
+                        console.log("%c Slow connexion..., pause for "+waiter+" loops " + d, error);
                     }
-                } else {
-                    console.log("%c Error getting stream. Waiting..., wait 10 loops", error);
-                    waiter = 10;
+                    if (!first_buffer_time) {
+                        first_buffer_time = player.getCurrentTime();
+                    }
+                    console.log("%c Restart buffer (10 loops since last download), and pause for 10 loops... (already restarted " + total_restart_buffer + " times " + d, warning);
+                    // sectotal * byteLoaded / byteTotal = sec loaded
+                    var current_time_loaded = player.getDuration() * player.getVideoLoadedFraction();
+                    player.seekTo(current_time_loaded - 2); // - 2sec
+                    player.pauseVideo();
+                    waiter = 1;
+                    total_restart_buffer++;
                 }
+                // Video is still loading...
             } else {
-                //console.log("We are waiting...");
+                previous_download = player.getVideoLoadedFraction();
+                loop_since_download = 0;
+                var current_chunk_loaded = Math.round(player.getVideoLoadedFraction() * 100);
+                console.info("%c Video is buffering properly (" + current_chunk_loaded + "%). " + loop + " loops, and " + loop_since_download + " iteration since last chunk, wait 10 loops " + d, success);
+                waiter = 1;
+                update_current_chunk_loaded(current_chunk_loaded);
+            }
+            loop++;
+        } else {
+            last_chunk_loaded = Math.round(player.getVideoLoadedFraction() * 100);
+            console.log("%c Everything is loaded or the tab is inactive... Wait 50sec. Total number of buffer restart : " + total_restart_buffer + " and Total buffered : " + last_chunk_loaded + "%. Buffered on launch : " + first_chunk_loaded, success);
+            waiter = 5;
+            // restarting to first buffer and play
+            if (first_buffer_time) {
+                player.seekTo(first_buffer_time);
+                first_buffer_time = false;
+                // 主线程调用worker.postMessage()方法，向 Worker 发消息。
+                pollingWorker.postMessage('done');
+                pollingWorker.terminate();
             }
         }
     }
@@ -161,42 +165,51 @@
         return worker;
     }
 
-    var pollingWorker = createWorker(function (e) {
-        var inter = setInterval(function () {
-            // console.log(new Date().toLocaleString());
-            // 向主线程中发送数据
-            self.postMessage(1);
-        }, 1000);
-        self.onmessage = function (e) {
-            if (e.data == 'done') {
-                this.clearInterval(inter);
-                self.close();
-            }
-        }
-    });
-
-    // 主线程调用worker.postMessage()方法，向 Worker 发消息。
-    // pollingWorker.postMessage('init');
-
-    // 主线程通过worker.onmessage指定监听函数，接收子线程发回来的消息。事件对象的data属性可以获取 Worker 发来的数据。
-    pollingWorker.onmessage = function (event) {
-        loading_video()
-    }
+    var pollingWorker;
 
     player.addEventListener('onStateChange', function (event) {
-        if (event.data == 0) {
+        console.log("onStateChange: "+event);
+        if (event == 0) {
             // 0（已结束）
         }
-        else if (event.data == 1) {
+        else if (event == 1) {
             // 1（正在播放）
+            console.log("正在播放...");
+            if (pollingWorker) {
+                // 主线程调用worker.postMessage()方法，向 Worker 发消息。
+                pollingWorker.postMessage('done');
+                pollingWorker.terminate();
+            }
         }
-        else if (event.data == 2) {
+        else if (event == 2) {
             // 2（已暂停）
+            console.log("已暂停...");
+            pollingWorker = createWorker(function (e) {
+                var inter = setInterval(function () {
+                    // console.log(new Date().toLocaleString());
+                    // 向主线程中发送数据
+                    self.postMessage(1);
+                }, 3 * 1000);
+                self.onmessage = function (e) {
+                    if (e.data == 'done') {
+                        this.clearInterval(inter);
+                        self.close();
+                    }
+                }
+            });
+
+            // 主线程调用worker.postMessage()方法，向 Worker 发消息。
+            // pollingWorker.postMessage('init');
+
+            // 主线程通过worker.onmessage指定监听函数，接收子线程发回来的消息。事件对象的data属性可以获取 Worker 发来的数据。
+            pollingWorker.onmessage = function (event) {
+                loading_video()
+            }
         }
-        else if (event.data == 3) {
+        else if (event == 3) {
             // 3（正在缓冲）
         }
-        else if (event.data == 5) {
+        else if (event == 5) {
             // 5（视频已插入）
         }
         else {
@@ -210,4 +223,3 @@
         var v_title = h1.children[0].innerHTML;
     });
 })();
-
