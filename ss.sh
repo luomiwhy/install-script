@@ -17,6 +17,17 @@ sysctl net.ipv4.tcp_congestion_control
 sysctl net.core.default_qdisc
 lsmod | grep bbr
 
+# go install
+wget https://studygolang.com/dl/golang/go1.19.2.linux-amd64.tar.gz
+rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.2.linux-amd64.tar.gz
+
+vi /etc/profile
+export PATH=$PATH:/usr/local/go/bin
+
+source /etc/profile
+go version
+# go install
+
 
 # tcp加速 kcptun、bbrplus、锐速、dog-tunnel、rescue被抢vps
 # 转发 socat.sh
