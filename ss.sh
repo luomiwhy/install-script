@@ -6,9 +6,8 @@ apt install -y vim mysql-server
 vim /etc/ssh/sshd_config
 
 
-https://github.com/ylx2016/Linux-NetSpeed
-#wget -N --no-check-certificate "https://github.000060000.xyz/tcp.sh" && chmod +x tcp.sh && ./tcp.sh
-wget -N "https://github.000060000.xyz/tcpx.sh" && chmod +x tcpx.sh && ./tcpx.sh
+#https://github.com/ylx2016/Linux-NetSpeed
+wget -O tcpx.sh "https://github.com/ylx2016/Linux-NetSpeed/raw/master/tcpx.sh" && chmod +x tcpx.sh && ./tcpx.sh
 
 
 uname -a
