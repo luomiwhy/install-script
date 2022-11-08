@@ -6,7 +6,7 @@ ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 # vim /etc/ssh/sshd_config
 
 
-#https://github.com/ylx2016/Linux-NetSpeed
+# https://github.com/ylx2016/Linux-NetSpeed
 wget -O tcpx.sh "https://github.com/ylx2016/Linux-NetSpeed/raw/master/tcpx.sh" && chmod +x tcpx.sh && ./tcpx.sh
 
 
@@ -29,6 +29,13 @@ go version
 
 # https://github.com/klzgrad/naiveproxy
 
+cat > startnaive.sh <<EOF
+#!/bin/bash
+/root/caddy start
+EOF
+
+chmod +x startnaive.sh
+ln -sf /root/startnaive.sh /etc/init.d/startnaive
 
 
 #---------------------------------------------------------------------------------------------------
