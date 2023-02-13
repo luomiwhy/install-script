@@ -1,0 +1,15 @@
+{
+  https_port 8863
+  email johncmclean@protonmail.com #你的邮箱
+}
+
+ppp.indimmgg.buzz:80, mwd.indimmgg.buzz:80 {
+  redir https://{host}:8863{uri} permanent 
+}
+
+ppp.indimmgg.buzz:8863, mwd.indimmgg.buzz:8863 {
+  reverse_proxy  https://www.91mdz.com { #伪装网址
+    header_up  Host  {upstream_hostport}
+    header_up  X-Forwarded-Host  {host}
+  }
+}
