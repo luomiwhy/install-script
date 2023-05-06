@@ -16,6 +16,8 @@ sysctl net.ipv4.tcp_congestion_control
 sysctl net.core.default_qdisc
 lsmod | grep bbr
 
+
+# https://github.com/RayWangQvQ/naiveproxy-docker
 # go install
 wget https://studygolang.com/dl/golang/go1.19.2.linux-amd64.tar.gz
 rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.2.linux-amd64.tar.gz
