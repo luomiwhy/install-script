@@ -17,6 +17,7 @@ sysctl net.core.default_qdisc
 lsmod | grep bbr
 
 
+# sh <(curl -sL https://get.docker.com)
 # https://github.com/RayWangQvQ/naiveproxy-docker
 # go install
 wget https://studygolang.com/dl/golang/go1.19.2.linux-amd64.tar.gz
