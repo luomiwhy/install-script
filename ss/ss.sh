@@ -5,7 +5,7 @@ ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 # apt install -y vim mysql-server
 # vim /etc/ssh/sshd_config
 
-
+# sh -c 'echo 1 > /proc/sys/net/ipv6/conf/eth0/disable_ipv6'
 # https://github.com/ylx2016/Linux-NetSpeed
 wget -O tcpx.sh "https://github.com/ylx2016/Linux-NetSpeed/raw/master/tcpx.sh" && chmod +x tcpx.sh && ./tcpx.sh
 
