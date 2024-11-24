@@ -20,6 +20,7 @@ lsmod | grep bbr
 
 sh <(curl -sL https://get.docker.com)
 # https://github.com/RayWangQvQ/naiveproxy-docker
+wget https://raw.githubusercontent.com/RayWangQvQ/naiveproxy-docker/main/install.sh
 # go install
 wget https://studygolang.com/dl/golang/go1.19.2.linux-amd64.tar.gz
 rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.2.linux-amd64.tar.gz
